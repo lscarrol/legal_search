@@ -24,3 +24,8 @@ When a user submits a query, the backend performs the following steps:
 
 3. **Relevance Assessment**: The summarized court cases are then processed using the GPT-3.5-turbo-instruct language model. The model is prompted to assess the relevance of each summary to the user's query and provide a relevance statement.
 
+
+## Example Usage
+
+![alt text](https://github.com/lscarrol/legal_search/blob/main/pic1.png)
+![alt text](https://github.com/lscarrol/legal_search/blob/main/pic2.png)
