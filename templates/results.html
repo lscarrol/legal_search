@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for "{{ query }}"</h1>
+    {% for item in output %}
+        <div>
+            <h3>Case: {{ item.case_name }}</h3>
+            <p>Author: {{ item.author }}</p>
+            <p>Date Filed: {{ item.date_filed }}</p>
+            <p>URL: <a href="{{ item.absolute_url }}" target="_blank">{{ item.absolute_url }}</a></p>
+            <h4>Summary:</h4>
+            <p>{{ item.summary }}</p>
+            <h4>Relevance:</h4>
+            <p>{{ item.relevance }}</p>
+            <hr>
+        </div>
+    {% endfor %}
+    <a href="/">Back to Search</a>
+</body>
+</html>
