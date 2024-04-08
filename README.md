@@ -1,4 +1,4 @@
-# LegalSearch - MongoDB 2024 Hackathon
+# LegalSearch
 
 LegalSearch is a project developed for the MongoDB 2024 Hackathon that aims to provide an efficient and user-friendly way to search through a large dataset of court cases. By leveraging cutting-edge technologies such as Nomic embeddings, Atlas vector search, and natural language processing, LegalSearch enables users to find relevant court cases based on their queries.
 
