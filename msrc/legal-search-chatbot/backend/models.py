@@ -76,8 +76,20 @@ def build_output(results, query):
     return output
     
 
-query = "What is the legal definition of assault?"
+def generate_chat_response(user_input, chat_history, search_output):
+    # Combine the user input, chat history, and search output into a single prompt
+    prompt = f"User: {user_input}\nChat History:\n"
+    for chat in chat_history:
+        prompt += f"User: {chat['userInput']}\nBot: {chat['botResponse']}\n"
+    prompt += f"Search Results:\n{search_output}\nBot:"
 
-ret = search(query)
+    # Generate a response using OpenAI's GPT-3.5-turbo model
+    openai.api_key = openai_key
+    response = openai.completions.create(
+        model="gpt-3.5-turbo-instruct",
+        prompt=prompt,
+        max_tokens=150
+    )
 
-build_output(ret, query)
+    bot_response = response.choices[0].text.strip()
+    return bot_response

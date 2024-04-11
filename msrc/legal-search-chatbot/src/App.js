@@ -3,47 +3,52 @@ import axios from 'axios';
 import './App.css';
 
 function App() {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/search', { query });
-      setResults(response.data);
-    } catch (error) {
-      console.error('Error:', error);
+    if (userInput.trim() !== '') {
+      setLoading(true);
+      try {
+        const response = await axios.post('http://localhost:5000/api/chat', {
+          userInput,
+          chatHistory,
+        });
+        const botResponse = response.data.botResponse;
+        setChatHistory([...chatHistory, { userInput, botResponse }]);
+        setUserInput('');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      setLoading(false);
     }
   };
 
   return (
     <div className="App">
       <h1>LegalSearch Chatbot</h1>
+      <div className="chat-container">
+        {chatHistory.map((chat, index) => (
+          <div key={index}>
+            <p className="user-input">User: {chat.userInput}</p>
+            <p className="bot-response">Bot: {chat.botResponse}</p>
+          </div>
+        ))}
+        {loading && <p className="loading">Loading...</p>}
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your search query"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Type your message"
         />
-        <button type="submit">Search</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Sending...' : 'Send'}
+        </button>
       </form>
-      <div className="results">
-        {results.map((item, index) => (
-          <div key={index} className="result">
-            <h3>Case: {item.case_name}</h3>
-            <p>Author: {item.author}</p>
-            <p>Date Filed: {item.date_filed}</p>
-            <p>
-              URL: <a href={item.absolute_url} target="_blank" rel="noopener noreferrer">{item.absolute_url}</a>
-            </p>
-            <h4>Summary:</h4>
-            <p>{item.summary}</p>
-            <h4>Relevance:</h4>
-            <p>{item.relevance}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
