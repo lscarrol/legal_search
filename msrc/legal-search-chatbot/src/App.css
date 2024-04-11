@@ -3,6 +3,30 @@
   padding: 20px;
 }
 
+.chat-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.user-query {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.bot-answer {
+  margin-bottom: 10px;
+}
+
+.loading {
+  color: #888;
+  font-style: italic;
+}
+
 form {
   margin-bottom: 20px;
 }
@@ -22,13 +46,7 @@ button {
   cursor: pointer;
 }
 
-.results {
-  display: grid;
-  grid-gap: 20px;
-}
-
-.result {
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 5px;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
